@@ -7,6 +7,7 @@ import theme from "./styles/theme";
 import "./css/left.css";
 import "./css/right.css";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 import { getConfig } from "./utils/config";
 
