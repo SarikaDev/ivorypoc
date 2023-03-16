@@ -6,7 +6,7 @@ import ProtectedRoutes from "./ProtectedRoute";
 // const MenuBar = lazy(() => import("../Pages/NavMenu/NavMenu"));
 const LoginPage = lazy(() => import("../Pages/LoginPage/Login"));
 const NotFound = lazy(() => import("../Pages/Error/NotFound"));
-const FacePage = lazy(() => import("../Pages/LoginTypes/Face"));
+const FacePage = lazy(() => import("../Pages/LoginTypes/Face.tsx"));
 const DashboardPage = lazy(() => import("../Pages/Dashboard/Dashboard"));
 
 const HandleRoutes = () => (

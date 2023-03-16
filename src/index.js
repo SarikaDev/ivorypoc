@@ -4,6 +4,8 @@ import App from "./App";
 import { CssBaseline, ThemeProvider, CircularProgress } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
 import theme from "./styles/theme";
+import "./css/left.css";
+import "./css/right.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { getConfig } from "./utils/config";

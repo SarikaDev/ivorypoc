@@ -1,39 +1,47 @@
 import { createTheme } from "@mui/material";
 
-export const Colors = {
-  primary: "#c9f2c7",
-  secondary: "#EBEFE3",
-  success: "#4ACF50",
-  info: "#002ff",
-  danger: "#FF5722",
-  warning: "#FFC107",
-  dark: "#0e1b20",
-  light: "#aaa",
-  light_green: "#dbeac6",
-  dark_green: "#243119",
-
-  white: "#fff",
-  black: "#000",
+const colors = {
+  primary: "rgba(241, 171, 21, 1)",
+  secondary: "#D3D3D3",
+  black: "#454545",
+  white: "white",
+  lightgrey: "#efeff1",
+  green: "#1ec771",
+  info: "#bd6100",
 };
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: Colors.primary,
-      light: Colors.light_green,
-      dark: Colors.dark_green,
-    },
-    secondary: {
-      main: Colors.secondary,
+  typography: {
+    fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  },
+
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+        },
+      },
     },
   },
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true,
-        disableTouchRipple: true,
-        disabled: true,
-      },
+  palette: {
+    primary: {
+      main: colors.primary,
+      error: colors.lightgrey,
+    },
+    secondary: {
+      main: colors.secondary,
+      secondary: colors.white,
+      error: colors.green,
+    },
+    info: {
+      main: colors.info,
+    },
+    grey: {
+      100: "#EFF1F3",
+    },
+    common: {
+      black: "#343434",
     },
   },
 });
