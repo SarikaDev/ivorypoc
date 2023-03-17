@@ -184,6 +184,7 @@ const Login = () => {
               <TextField
                 color={"info"}
                 type='text'
+                inputProps={{ autocomplete: "off" }}
                 variant='outlined'
                 style={{ width: "100%", marginTop: "1rem" }}
                 label={"ID Number"}
