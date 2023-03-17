@@ -64,7 +64,6 @@ const Face = () => {
 
     fetch(allOriginsUrl + url, {
       method: "POST",
-      mode: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON?.stringify({
         transactionId: "b3c350aa-2734-48d1-345-7777777",
