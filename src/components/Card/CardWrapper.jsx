@@ -2,7 +2,7 @@ import { styled, Toolbar } from "@mui/material";
 import { Box } from "@mui/material";
 
 const ContainerWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: "#FFFFF",
+  backgroundColor: "#EFEFF1",
   width: "100%",
   minHeight: "100vh",
   padding: theme.spacing(5),

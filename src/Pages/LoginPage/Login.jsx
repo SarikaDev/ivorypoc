@@ -4,9 +4,21 @@ import image from "../../assets/app_logo.png";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants";
 import { toast } from "react-toastify";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import axios from "../../api/axios";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import axios from "axios";
 
+import PersonIcon from "@mui/icons-material/Person";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -37,6 +49,39 @@ const Login = () => {
     sessionStorage.clear();
   }, []);
 
+  const HandelSubmit = useCallback(
+    async e => {
+      e.preventDefault();
+      if (!mobile.length) {
+        toast.error("please enter ID number");
+      } else {
+        setIsLoading(true);
+        fetch("https://efreshsoftwares.in/ivrdigital/login.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `documentNumber=${mobile}`,
+        })
+          .then(function (response) {
+            return response?.json();
+          })
+          .then(function (data) {
+            const response = JSON.stringify(data);
+            sessionStorage.setItem("response", response);
+            setIsLoading(false);
+            if (data.statusCode == 200) {
+              navigate(PATHS.face);
+            } else if (data.statusCode == 400) {
+              toast.error("Entered ID number is incorrect");
+            }
+          });
+      }
+    },
+    [mobile],
+  );
+  const theme = useTheme();
+
   return (
     <div
       style={{
@@ -63,12 +108,11 @@ const Login = () => {
           alignItems={"center"}
           flexDirection={"column"}
         >
-          {/* Hiiiii */}
           <img
-            width={"50%"}
+            width={"40%"}
             src={image}
             alt='logo'
-            style={{ marginTop: "-5rem" }}
+            style={{ marginTop: "-2rem" }}
           />
           <Typography
             fontWeight={600}
@@ -98,52 +142,70 @@ const Login = () => {
           height={"88%"}
           marginTop={"3.5%"}
         ></Box>
-        <Box
-          width={"50%"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
+        {isLoading ? (
           <Box
-            textAlign={"center"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
-            flexDirection={"column"}
+            width={"50%"}
           >
-            <Typography color={"#bd6100"} fontSize={"1.8rem"} fontWeight={600}>
-              Login to smart services
-            </Typography>
-            <Typography
-              color={"#bd6100"}
-              fontWeight={600}
-              textAlign={"center"}
-              marginTop={"2rem"}
-            >
-              Please Enter Document Number
-            </Typography>
-            <TextField
-              color={"info"}
-              type='text'
-              variant='outlined'
-              style={{ width: "80%", marginTop: "1rem" }}
-              label={"Document Number"}
-            />
-            <Button
-              style={{
-                width: "80%",
-                marginTop: "1rem",
-                backgroundColor: "#bd6100",
-                color: "white",
-              }}
-              onClick={() => {
-                navigate(PATHS.face);
-              }}
-            >
-              SUBMIT
-            </Button>
+            {" "}
+            <CircularProgress color='info' />
           </Box>
-        </Box>
+        ) : (
+          <Box
+            width={"50%"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Box
+              textAlign={"center"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              flexDirection={"column"}
+            >
+              <Typography
+                color={"#bd6100"}
+                fontSize={"1.8rem"}
+                fontWeight={600}
+              >
+                Login to smart services
+              </Typography>
+              <Typography
+                color={"#bd6100"}
+                fontWeight={600}
+                textAlign={"center"}
+                marginTop={"2rem"}
+              >
+                Please Enter ID Number
+              </Typography>
+              <TextField
+                color={"info"}
+                type='text'
+                variant='outlined'
+                style={{ width: "100%", marginTop: "1rem" }}
+                label={"ID Number"}
+                onChange={handleNumber}
+                value={mobile || ""}
+                pattern='^[0-9]*$'
+                required
+              />
+              <Button
+                style={{
+                  width: "100%",
+                  marginTop: "1rem",
+                  backgroundColor: "#bd6100",
+                  color: "white",
+                }}
+                onClick={HandelSubmit}
+              >
+                SUBMIT
+              </Button>
+            </Box>
+          </Box>
+        )}
       </Box>
     </div>
   );

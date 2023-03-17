@@ -1,31 +1,32 @@
-import { styled, Toolbar } from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { SM_WIDTH } from "../../../utils/constants";
 const drawerWidth = 280;
 
 const StyledDrawer = styled(Drawer)(() => ({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "#f1f1f1",
   zIndex: 0,
 }));
 
-const MuiDrawer = ({ isOpen, children, ...other }) => {
-  const isLarge = useMediaQuery(`(min-width:${SM_WIDTH}px)`);
+const MuiDrawer = ({ children, ...other }) => {
+  const theme = useTheme();
 
   return (
     <StyledDrawer
-      anchor="left"
+      anchor='left'
       sx={{
         width: drawerWidth,
+        backgroundColor: "red",
         ".css-dm4aar-MuiPaper-root-MuiDrawer-paper": { width: drawerWidth },
-        ".css-12i7wg6-MuiPaper-root-MuiDrawer-paper": { width: drawerWidth },
+
+        ".css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
+          width: drawerWidth,
+          borderRight: `2px solid ${theme.palette.primary.main}`,
+        },
       }}
       {...other}
       elevation={5}
-      variant={isLarge ? "permanent" : "temporary"}
-      open={isLarge || isOpen}
+      variant={"permanent"}
     >
-      <Toolbar />
       {children}
     </StyledDrawer>
   );

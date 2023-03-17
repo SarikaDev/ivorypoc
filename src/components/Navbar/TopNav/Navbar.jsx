@@ -1,25 +1,33 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, IconButton, styled, Toolbar, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  styled,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
-import logo from "../../../assets/app_logo.png";
+import logo2 from "../../../assets/g2.png";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { SM_WIDTH } from "../../../utils/constants";
 import { useCallback } from "react";
 import axios from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
 const Img = styled("img")(() => ({
-  width: "108px",
-  height: "71px",
-  marginTop: "-0.5rem",
+  width: "450px",
+  height: "70px",
+  // marginTop: "-0.5rem",
+  marginLeft: "26rem",
   cursor: "pointer",
 }));
 
 const StyledNavbar = styled(MuiAppBar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.secondary,
-  paddingTop: theme.spacing(1),
-  paddingLeft: theme.spacing(1),
-  paddingBottom: theme.spacing(0.5),
+  paddingTop: theme.spacing(0.3),
+  paddingLeft: theme.spacing(0.3),
+  paddingBottom: theme.spacing(0.1),
   borderBottom: `2px solid ${theme.palette.primary.main}`,
   display: "flex",
   flexDirection: "row",
@@ -31,18 +39,8 @@ const StyledNavbar = styled(MuiAppBar)(({ theme }) => ({
   justifyContent: "space-between",
 }));
 
-const Navbar = ({ setIsOpen, ...other }) => {
-  // const { displayName, roleName, reportingRoleName } = JSON.parse(
-  //   sessionStorage.getItem("jwtWithDetails"),
-  // );
-  // const details = JSON.parse(sessionStorage.getItem("jwtWithDetails"));
-  // const hasReportingRoleName =
-  //   Object?.keys(details)?.includes("reportingRoleName");
-  const isLarge = useMediaQuery(`(min-width:${SM_WIDTH}px)`);
+const Navbar = ({ ...other }) => {
   const navigate = useNavigate();
-  const toggleNavbar = useCallback(() => {
-    setIsOpen(prev => !prev);
-  }, [setIsOpen]);
 
   const handleImageClick = () => {};
 
@@ -54,24 +52,31 @@ const Navbar = ({ setIsOpen, ...other }) => {
 
   return (
     <StyledNavbar {...other}>
+      <IconButton
+        aria-label='send'
+        color='success'
+        size='small'
+        sx={{ marginRight: "1%" }}
+        onClick={logOut}
+      >
+        <LogoutIcon />
+      </IconButton>
       <Toolbar>
         <Box position={"relative"}>
-          {!isLarge && (
-            <Tooltip title='Open Navigation'>
-              <IconButton onClick={toggleNavbar}>
-                <MenuIcon />
-              </IconButton>
-            </Tooltip>
-          )}
           <Img
-            src={logo}
+            src={logo2}
             alt='Boa_logo'
             position={"absolute"}
-            left={"50%"}
+            // left={"80%"}
             onClick={() => handleImageClick()}
           />
         </Box>
       </Toolbar>
+      <Box marginLeft={"6rem"}>
+        <Button size='small' variant='outlined'>
+          en
+        </Button>
+      </Box>
       <IconButton
         aria-label='send'
         color='success'

@@ -6,7 +6,6 @@ import DrawList from "../../components/Navbar/SideNav/DrawerList";
 import Navbar from "../../components/Navbar/TopNav/Navbar";
 import { Outlet, useNavigate } from "react-router-dom";
 const NavMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [timer, setTimer] = useState(900);
   // ! Auto Logout
@@ -46,9 +45,9 @@ const NavMenu = () => {
 
   return (
     <Stack direction={"row"}>
-      <Navbar setIsOpen={setIsOpen} />
-      <MuiDrawer style={{ zIndex: 100 }} isOpen={isOpen}>
-        <DrawList setIsOpen={setIsOpen} />
+      <Navbar />
+      <MuiDrawer style={{ zIndex: 9999999 }}>
+        <DrawList />
       </MuiDrawer>
       <CardWrapper>{<Outlet />}</CardWrapper>
     </Stack>

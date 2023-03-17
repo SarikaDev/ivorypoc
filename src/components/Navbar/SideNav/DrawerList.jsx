@@ -1,119 +1,168 @@
 // Drawer_Left_NavBar_Component
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import { Box } from "@mui/material";
+
 // ! Re_usable Component
-// import FlakyOutlinedIcon from "@mui/icons-material/FlakyOutlined";
 
 const DrawList = ({ setIsOpen }) => {
+  const face = "SAd";
+  const profile_pic = "SAd";
+  const response = JSON.parse(sessionStorage.getItem("response"));
   return (
-    <Box
-      sx={{
-        width: "100%",
-        ".MuiBox-root.css-ndow8k": {
-          width: "280px",
-        },
-      }}
-    >
-      {/* <Box
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        marginY={4}
+    <Box>
+      <Typography
+        // fontSize={{ xs: 18, md: 16, lg: 18 }}
+        variant='h6'
+        sx={{ pt: 1 }}
+        // fontWeight='bold'
+        textAlign={"center"}
+        color={"#F1AB15"}
       >
-        <Avatar
-          alt="profile_pic"
-          src={face?.length ? `data:image/jpeg;base64,${face}` : profile_pic}
+        Digital Identification
+      </Typography>
+      <Card
+        sx={{
+          m: 1,
+          // mt: 5,
+        }}
+      >
+        <CardContent
           sx={{
-            width: "90px",
-            height: "90px",
-            objectFit: "cover",
+            border: "2px solid burlywood",
+            backgroundImage: "linear-gradient(180deg, #fff, #f6f4ed  )",
           }}
-        />
-        <Typography
-          fontSize={{ xs: 18, md: 16, lg: 18 }}
-          variant="body2"
-          textAlign={"center"}
         >
-          {displayName}
-        </Typography>
-
-        <Typography
-          fontSize={{ xs: 14, md: 14, lg: 14 }}
-          variant="h6"
-          color="#343434"
-          sx={{ fontWeight: "500" }}
-        >
-          {roleName}
-        </Typography>
-        <Typography
-          fontSize={{ xs: 14, md: 14, lg: 14 }}
-          variant="h6"
-          color="#343434"
-          sx={{ fontWeight: "500" }}
-        >
-          {reportingRoleName}
-        </Typography>
-
-        <Typography
-          fontSize={{ xs: 14, md: 14, lg: 14 }}
-          variant="h6"
-          color="#343434"
-          sx={{ fontWeight: "500" }}
-        >
-          {branchName}
-        </Typography>
-      </Box> */}
-      <Card sx={{ minWidth: 275, height: 200, marginTop: 3 }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-            Word of the Day
-          </Typography>
-          <Typography variant='h5' component='div'>
-            {/* be{bull}nev{bull}o{bull}lent */}
-            Hello
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-            adjective
-          </Typography>
-          <Typography variant='body2'>
-            well meaning and kindly.
+          <Box
+            style={{ textAlign: "center" }}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            marginBottom={"-0.5rem"}
+          >
+            <Avatar
+              alt='profile_pic'
+              src={
+                face?.length
+                  ? `data:image/jpeg;base64,${response?.userData[0]?.ocr_user_image}`
+                  : profile_pic
+              }
+              sx={{
+                width: "100px",
+                height: "100px",
+                objectFit: "cover",
+              }}
+            />
             <br />
-            {'"a benevolent smile"'}
-          </Typography>
+            {/* <br /> */}
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 2 }}
+              fontWeight='bold'
+              textAlign={"center"}
+            >
+              Date of Birth
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 1 }}
+              textAlign={"center"}
+            >
+              {response?.userData[0]?.date_of_birth}
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 2 }}
+              fontWeight='bold'
+              textAlign={"center"}
+            >
+              Sex
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 1 }}
+              textAlign={"center"}
+            >
+              {response?.userData[0]?.gender}
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 2 }}
+              fontWeight='bold'
+              textAlign={"center"}
+            >
+              Date of Expiry
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 1 }}
+              textAlign={"center"}
+            >
+              {response?.userData[0]?.dateOfExpiry}
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 2 }}
+              fontWeight='bold'
+              textAlign={"center"}
+            >
+              Nationality
+            </Typography>
+            <Typography
+              fontSize={{ xs: 18, md: 16, lg: 18 }}
+              variant='body2'
+              // sx={{ mt: 1 }}
+              textAlign={"center"}
+            >
+              {response?.userData[0]?.nationality}
+            </Typography>
+          </Box>
         </CardContent>
-        {/* <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
       </Card>
-      {/* <Box sx={{ width: "100%", position: "relative" }}>
-        <List component="nav">
-          {roleBasedViewPoints[0]?.map((navItem, index) =>
-            !!navItem?.children?.length ? (
-              <CollapsableNav
-                key={index}
-                onClick={closeNavbar}
-                primary={navItem?.title}
-                links={navItem?.children}
-                icon={navItem?.icon}
-                root={navItem?.link}
-              />
-            ) : (
-              <List>
-                <Link to={navItem?.link} key={index}>
-                  <ListItemButton
-                    selected={navItem?.link === location.pathname}
-                    onClick={closeNavbar}
-                  >
-                    <ListItemIcon>{navItem?.icon}</ListItemIcon>
-                    <ListItemText primary={navItem?.title} />
-                  </ListItemButton>
-                </Link>
-              </List>
-            ),
-          )}
-        </List>
-      </Box> */}
+      <Card
+        sx={{
+          m: 1,
+        }}
+      >
+        <CardContent
+          sx={{
+            border: "2px solid burlywood",
+            backgroundImage: "linear-gradient(180deg, #fff, #f6f4ed  )",
+          }}
+        >
+          <Box
+            style={{ textAlign: "center" }}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <img
+              alt='profile_pic'
+              src={
+                face?.length
+                  ? `${
+                      "https://efreshsoftwares.in/ivrdigital/" +
+                      response?.userData[0]?.qr_image
+                    }`
+                  : profile_pic
+              }
+              style={{
+                width: "120px",
+                height: "120px",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+        </CardContent>
+      </Card>
     </Box>
   );
 };
