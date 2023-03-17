@@ -55,18 +55,11 @@ const Face = () => {
     setImage(webcamRef!.current!.getScreenshot());
   }, [webcamRef]);
 
-  const [imgs, setImgs] = useState("");
-
   const handleNext = () => {
-    //  navigate(PATHS.dashboard)
-    const url = "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics";
-    const corsProxyUrl = "https://proxy.cors.sh/";
-
-    fetch(corsProxyUrl + url, {
+    fetch("https://gvm3f8u3.ngrok.app/MBAP/api/verifyBiometrics", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest",
       },
       body: JSON?.stringify({
         transactionId: "b3c350aa-2734-48d1-345-7777777",
@@ -99,12 +92,12 @@ const Face = () => {
       })
       .then(function (data) {
         setIsLoading(false);
-        const response = JSON.parse(data);
+        const response = JSON.stringify(data);
         sessionStorage.setItem("auth", response);
 
-        if (data.verificationResult === true) {
+        if (data?.verificationResult === true) {
           navigate(PATHS.dashboard);
-        } else if (data.verificationResult === false) {
+        } else if (data?.verificationResult === false) {
           if (data?.error?.errorMessage === "Verification Failed") {
             toast.error("Authentication failed, face mismatch");
           } else {
@@ -114,58 +107,11 @@ const Face = () => {
           setImage("");
           setCropped(false);
         }
+      })
+      .catch(err => {
+        setIsLoading(false);
       });
     setIsLoading(true);
-    // fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON?.stringify({
-    //     transactionId: "b3c350aa-2734-48d1-345-7777777",
-    //     transactionSource: "nxGen MBAP TestTool",
-    //     uid: "111122223333555555",
-    //     needTemplates: 0,
-    //     probeFace: {
-    //       pos: "F",
-    //       image: croppedImage.replace("data:image/jpeg;base64,", ""),
-    //       template: null,
-    //       quality: 0.0,
-    //     },
-    //     galleryFace: {
-    //       pos: "F",
-    //       image: response.userData[0]?.ocr_user_image,
-    //       template: null,
-    //       quality: 0.0,
-    //     },
-    //     probeFingerData: null,
-    //     galleryFingerData: null,
-    //     probeIrisData: null,
-    //     galleryIrisData: null,
-    //     faceThreshold: "6",
-    //     fingerThreshold: "6",
-    //     irisThreshold: "6",
-    //   }),
-    // })
-    //   .then(function (response) {
-    //     return response?.json();
-    //   })
-    //   .then(function (data) {
-    //     setIsLoading(false);
-    //     const response = JSON.stringify(data);
-    //     sessionStorage.setItem("auth", response);
-
-    //     if (data.verificationResult === true) {
-    //       navigate(PATHS.dashboard);
-    //     } else if (data.verificationResult === false) {
-    //       if (data?.error?.errorMessage === "Verification Failed") {
-    //         toast.error("Authentication failed, face mismatch");
-    //       } else {
-    //         toast.error("No proper face is captured");
-    //       }
-    //       setCroppedImage("");
-    //       setImage("");
-    //       setCropped(false);
-    //     }
-    //   });
   };
 
   useEffect(() => {
