@@ -60,9 +60,9 @@ const Face = () => {
   const handleNext = () => {
     //  navigate(PATHS.dashboard)
     const url = "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics";
-    const corsProxyUrl = "https://cors-anywhere.herokuapp.com/";
+    const allOriginsUrl = "https://api.allorigins.win/get?url=";
 
-    fetch(corsProxyUrl + url, {
+    fetch(allOriginsUrl + encodeURIComponent(url), {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
