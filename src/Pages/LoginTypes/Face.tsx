@@ -192,10 +192,7 @@ const Face = () => {
         console.log("Request failed.  Returned status of " + xhr.status);
       }
     };
-    var data = {
-      name: "John Doe",
-      email: "john.doe@example.com",
-    };
+
     xhr.send(JSON.stringify(data));
   };
 
@@ -203,7 +200,7 @@ const Face = () => {
     if (response?.statusCode != 200 || !response?.statusCode) {
       navigate("/");
     }
-  }, [response?.statusCode]);
+  }, [navigate, response?.statusCode]);
   useEffect(() => {
     if (auth?.verificationResult === true) {
       navigate(PATHS?.dashboard);
