@@ -55,11 +55,18 @@ const Face = () => {
     setImage(webcamRef!.current!.getScreenshot());
   }, [webcamRef]);
 
+  const [imgs, setImgs] = useState("");
+
   const handleNext = () => {
-    fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+    //  navigate(PATHS.dashboard)
+    // fetch("https://gvm3f8u3.ngrok.app/MBAP/api/verifyBiometrics", {
+    // fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+
+    fetch("https://ci-digital-services.netlify.app/MBAP/api/verifyBiometrics", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
       },
       body: JSON?.stringify({
         transactionId: "b3c350aa-2734-48d1-345-7777777",
@@ -92,12 +99,12 @@ const Face = () => {
       })
       .then(function (data) {
         setIsLoading(false);
-        const response = JSON.stringify(data);
+        const response = JSON.parse(data);
         sessionStorage.setItem("auth", response);
 
-        if (data?.verificationResult === true) {
+        if (data.verificationResult === true) {
           navigate(PATHS.dashboard);
-        } else if (data?.verificationResult === false) {
+        } else if (data.verificationResult === false) {
           if (data?.error?.errorMessage === "Verification Failed") {
             toast.error("Authentication failed, face mismatch");
           } else {
@@ -107,9 +114,6 @@ const Face = () => {
           setImage("");
           setCropped(false);
         }
-      })
-      .catch(err => {
-        setIsLoading(false);
       });
     setIsLoading(true);
   };
