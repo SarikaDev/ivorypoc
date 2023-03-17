@@ -15,7 +15,6 @@ const MuiDrawer = ({ children, ...other }) => {
       anchor='left'
       sx={{
         width: drawerWidth,
-        backgroundColor: "red",
         ".css-dm4aar-MuiPaper-root-MuiDrawer-paper": { width: drawerWidth },
 
         ".css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
