@@ -1,1 +1,1 @@
-https://ci-digital-services.netlify.app/*http://gn-testapi.tech5.tech:9090/:splat 200 
+http://gn-testapi.tech5.tech:9090/* https://ci-digital-services.netlify.app/:splat 301!
