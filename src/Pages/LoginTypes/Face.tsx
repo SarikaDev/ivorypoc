@@ -93,12 +93,12 @@ const Face = () => {
       })
       .then(function (data) {
         setIsLoading(false);
-        const response = JSON.parse(data);
+        const response = JSON.stringify(data);
         sessionStorage.setItem("auth", response);
 
-        if (data.verificationResult === true) {
+        if (data?.verificationResult === true) {
           navigate(PATHS.dashboard);
-        } else if (data.verificationResult === false) {
+        } else if (data?.verificationResult === false) {
           if (data?.error?.errorMessage === "Verification Failed") {
             toast.error("Authentication failed, face mismatch");
           } else {
@@ -113,15 +113,15 @@ const Face = () => {
   };
 
   useEffect(() => {
-    if (response?.statusCode != 200 || !response?.statusCode) {
+    if (response?.statusCode !== 200 || !response?.statusCode) {
       navigate("/");
     }
-  }, [response?.statusCode]);
+  }, [navigate, response?.statusCode]);
   useEffect(() => {
     if (auth?.verificationResult === true) {
       navigate(PATHS?.dashboard);
     }
-  }, [auth?.verificationResult]);
+  }, [auth?.verificationResult, navigate]);
 
   const retake = () => {
     setCroppedImage("");
