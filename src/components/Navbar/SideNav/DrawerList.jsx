@@ -9,7 +9,7 @@ const DrawList = ({ setIsOpen }) => {
   const profile_pic = "SAd";
   const response = JSON.parse(sessionStorage.getItem("response"));
   return (
-    <Box>
+    <Box width='275px'>
       <Typography
         // fontSize={{ xs: 18, md: 16, lg: 18 }}
         variant='h6'
