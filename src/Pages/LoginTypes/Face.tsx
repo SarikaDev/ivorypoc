@@ -57,41 +57,38 @@ const Face = () => {
     // fetch("https://gvm3f8u3.ngrok.app/MBAP/api/verifyBiometrics", {
     // fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
 
-    fetch(
-      "https://ci-digital-services.netlify.app/api/MBAP/api/verifyBiometrics",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-        body: JSON?.stringify({
-          transactionId: "b3c350aa-2734-48d1-345-7777777",
-          transactionSource: "nxGen MBAP TestTool",
-          uid: "111122223333555555",
-          needTemplates: 0,
-          probeFace: {
-            pos: "F",
-            image: croppedImage.replace("data:image/jpeg;base64,", ""),
-            template: null,
-            quality: 0.0,
-          },
-          galleryFace: {
-            pos: "F",
-            image: response.userData[0]?.ocr_user_image,
-            template: null,
-            quality: 0.0,
-          },
-          probeFingerData: null,
-          galleryFingerData: null,
-          probeIrisData: null,
-          galleryIrisData: null,
-          faceThreshold: "6",
-          fingerThreshold: "6",
-          irisThreshold: "6",
-        }),
+    // fetch("http://api/MBAP/api/verifyBiometrics", {
+    fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    )
+      body: JSON?.stringify({
+        transactionId: "b3c350aa-2734-48d1-345-7777777",
+        transactionSource: "nxGen MBAP TestTool",
+        uid: "111122223333555555",
+        needTemplates: 0,
+        probeFace: {
+          pos: "F",
+          image: croppedImage.replace("data:image/jpeg;base64,", ""),
+          template: null,
+          quality: 0.0,
+        },
+        galleryFace: {
+          pos: "F",
+          image: response.userData[0]?.ocr_user_image,
+          template: null,
+          quality: 0.0,
+        },
+        probeFingerData: null,
+        galleryFingerData: null,
+        probeIrisData: null,
+        galleryIrisData: null,
+        faceThreshold: "6",
+        fingerThreshold: "6",
+        irisThreshold: "6",
+      }),
+    })
       .then(function (response) {
         return response?.json();
       })
