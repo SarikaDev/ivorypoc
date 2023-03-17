@@ -7,12 +7,6 @@ import { toast } from "react-toastify";
 import Webcam from "react-webcam";
 import { Button } from "react-bootstrap";
 import { PATHS } from "../../utils/constants";
-import axios from "axios";
-const videoConstraints = {
-  width: 519,
-  height: 400,
-  facingMode: "user",
-};
 
 const Face = () => {
   const navigate = useNavigate();
@@ -56,9 +50,48 @@ const Face = () => {
   }, [webcamRef]);
 
   const [imgs, setImgs] = useState("");
-
+  const req = {
+    transactionId: "b3c350aa-2734-48d1-345-7777777",
+    transactionSource: "nxGen MBAP TestTool",
+    uid: "111122223333555555",
+    needTemplates: 0,
+    probeFace: {
+      pos: "F",
+      image: croppedImage.replace("data:image/jpeg;base64,", ""),
+      template: null,
+      quality: 0.0,
+    },
+    galleryFace: {
+      pos: "F",
+      image: response.userData[0]?.ocr_user_image,
+      template: null,
+      quality: 0.0,
+    },
+    probeFingerData: null,
+    galleryFingerData: null,
+    probeIrisData: null,
+    galleryIrisData: null,
+    faceThreshold: "6",
+    fingerThreshold: "6",
+    irisThreshold: "6",
+  };
   const handleNext = () => {
     //  navigate(PATHS.dashboard)
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+      "POST",
+      "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics",
+    );
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log(xhr.responseText);
+      } else {
+        console.log("Request failed.  Returned status of " + xhr.status);
+      }
+    };
+    xhr.send(JSON.stringify(req));
+
     setIsLoading(true);
     fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
       method: "POST",
@@ -249,15 +282,10 @@ const Face = () => {
                     }}
                   >
                     <Button
-                      variant={"contained"}
                       style={{
-                        background: "#F1AB15",
-                        fontSize: "1.125rem",
-                        boxShadow: "unset",
-                        height: "2.8rem",
-                        borderRadius: "16px",
-                        width: "26rem",
-                        marginRight: "2rem",
+                        background: "#bd6100",
+
+                        width: "13rem",
                       }}
                       onClick={() => {
                         retake();
@@ -270,14 +298,10 @@ const Face = () => {
 
                     {cropped ? (
                       <Button
-                        variant={"contained"}
                         style={{
-                          background: "#F1AB15",
-                          fontSize: "1.125rem",
-                          boxShadow: "unset",
-                          height: "2.8rem",
-                          borderRadius: "16px",
-                          width: "26rem",
+                          background: "#bd6100",
+
+                          width: "13rem",
                         }}
                         onClick={() => {
                           handleNext();
@@ -287,14 +311,10 @@ const Face = () => {
                       </Button>
                     ) : (
                       <Button
-                        variant={"contained"}
                         style={{
-                          background: "#F1AB15",
-                          fontSize: "1.125rem",
-                          boxShadow: "unset",
-                          height: "2.8rem",
-                          borderRadius: "16px",
-                          width: "26rem",
+                          background: "#bd6100",
+
+                          width: "13rem",
                         }}
                         onClick={() => {
                           cropImage();
