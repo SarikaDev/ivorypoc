@@ -95,62 +95,11 @@ const Face = () => {
       }),
     })
       .then(function (response) {
-        return response?.text();
-      })
-      .then(function (data) {
-        setIsLoading(false);
-        const response = JSON.parse(data);
-        // sessionStorage.setItem("auth", response);
-
-        if (response.verificationResult === true) {
-          navigate(PATHS.dashboard);
-        } else if (response.verificationResult === false) {
-          if (response?.error?.errorMessage === "Verification Failed") {
-            toast.error("Authentication failed, face mismatch");
-          } else {
-            toast.error("No proper face is captured");
-          }
-          setCroppedImage("");
-          setImage("");
-          setCropped(false);
-        }
-      });
-    setIsLoading(true);
-    fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON?.stringify({
-        transactionId: "b3c350aa-2734-48d1-345-7777777",
-        transactionSource: "nxGen MBAP TestTool",
-        uid: "111122223333555555",
-        needTemplates: 0,
-        probeFace: {
-          pos: "F",
-          image: croppedImage.replace("data:image/jpeg;base64,", ""),
-          template: null,
-          quality: 0.0,
-        },
-        galleryFace: {
-          pos: "F",
-          image: response.userData[0]?.ocr_user_image,
-          template: null,
-          quality: 0.0,
-        },
-        probeFingerData: null,
-        galleryFingerData: null,
-        probeIrisData: null,
-        galleryIrisData: null,
-        faceThreshold: "6",
-        fingerThreshold: "6",
-        irisThreshold: "6",
-      }),
-    })
-      .then(function (response) {
         return response?.json();
       })
       .then(function (data) {
         setIsLoading(false);
-        const response = JSON.stringify(data);
+        const response = JSON.parse(data);
         sessionStorage.setItem("auth", response);
 
         if (data.verificationResult === true) {
@@ -166,6 +115,57 @@ const Face = () => {
           setCropped(false);
         }
       });
+    setIsLoading(true);
+    // fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON?.stringify({
+    //     transactionId: "b3c350aa-2734-48d1-345-7777777",
+    //     transactionSource: "nxGen MBAP TestTool",
+    //     uid: "111122223333555555",
+    //     needTemplates: 0,
+    //     probeFace: {
+    //       pos: "F",
+    //       image: croppedImage.replace("data:image/jpeg;base64,", ""),
+    //       template: null,
+    //       quality: 0.0,
+    //     },
+    //     galleryFace: {
+    //       pos: "F",
+    //       image: response.userData[0]?.ocr_user_image,
+    //       template: null,
+    //       quality: 0.0,
+    //     },
+    //     probeFingerData: null,
+    //     galleryFingerData: null,
+    //     probeIrisData: null,
+    //     galleryIrisData: null,
+    //     faceThreshold: "6",
+    //     fingerThreshold: "6",
+    //     irisThreshold: "6",
+    //   }),
+    // })
+    //   .then(function (response) {
+    //     return response?.json();
+    //   })
+    //   .then(function (data) {
+    //     setIsLoading(false);
+    //     const response = JSON.stringify(data);
+    //     sessionStorage.setItem("auth", response);
+
+    //     if (data.verificationResult === true) {
+    //       navigate(PATHS.dashboard);
+    //     } else if (data.verificationResult === false) {
+    //       if (data?.error?.errorMessage === "Verification Failed") {
+    //         toast.error("Authentication failed, face mismatch");
+    //       } else {
+    //         toast.error("No proper face is captured");
+    //       }
+    //       setCroppedImage("");
+    //       setImage("");
+    //       setCropped(false);
+    //     }
+    //   });
   };
 
   useEffect(() => {
