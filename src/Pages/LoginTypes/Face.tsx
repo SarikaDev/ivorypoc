@@ -56,7 +56,7 @@ const Face = () => {
   }, [webcamRef]);
 
   const handleNext = () => {
-    fetch("https://gvm3f8u3.ngrok.app/MBAP/api/verifyBiometrics", {
+    fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
