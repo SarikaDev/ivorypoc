@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Webcam from "react-webcam";
 import { Button } from "react-bootstrap";
 import { PATHS } from "../../utils/constants";
-import axios from "../../api/axios";
+import axios from "axios";
 const videoConstraints = {
   width: 519,
   height: 400,
@@ -56,36 +56,16 @@ const Face = () => {
   }, [webcamRef]);
 
   const [imgs, setImgs] = useState("");
-  const data = {
-    transactionId: "b3c350aa-2734-48d1-345-7777777",
-    transactionSource: "nxGen MBAP TestTool",
-    uid: "111122223333555555",
-    needTemplates: 0,
-    probeFace: {
-      pos: "F",
-      image: croppedImage.replace("data:image/jpeg;base64,", ""),
-      template: null,
-      quality: 0.0,
-    },
-    galleryFace: {
-      pos: "F",
-      image: response.userData[0]?.ocr_user_image,
-      template: null,
-      quality: 0.0,
-    },
-    probeFingerData: null,
-    galleryFingerData: null,
-    probeIrisData: null,
-    galleryIrisData: null,
-    faceThreshold: "6",
-    fingerThreshold: "6",
-    irisThreshold: "6",
-  };
+
   const handleNext = () => {
     //  navigate(PATHS.dashboard)
+    const url = "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics";
+    const corsProxyUrl = "https://cors-anywhere.herokuapp.com/";
 
-    axios
-      .post("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+    fetch(corsProxyUrl + url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON?.stringify({
         transactionId: "b3c350aa-2734-48d1-345-7777777",
         transactionSource: "nxGen MBAP TestTool",
         uid: "111122223333555555",
@@ -109,16 +89,57 @@ const Face = () => {
         faceThreshold: "6",
         fingerThreshold: "6",
         irisThreshold: "6",
-      })
+      }),
+    })
+      .then(response => response.json())
       .then(data => {
+        // Handle the API response here
+      })
+      .catch(error => {
+        // Handle any errors here
+      });
+    setIsLoading(true);
+    fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON?.stringify({
+        transactionId: "b3c350aa-2734-48d1-345-7777777",
+        transactionSource: "nxGen MBAP TestTool",
+        uid: "111122223333555555",
+        needTemplates: 0,
+        probeFace: {
+          pos: "F",
+          image: croppedImage.replace("data:image/jpeg;base64,", ""),
+          template: null,
+          quality: 0.0,
+        },
+        galleryFace: {
+          pos: "F",
+          image: response.userData[0]?.ocr_user_image,
+          template: null,
+          quality: 0.0,
+        },
+        probeFingerData: null,
+        galleryFingerData: null,
+        probeIrisData: null,
+        galleryIrisData: null,
+        faceThreshold: "6",
+        fingerThreshold: "6",
+        irisThreshold: "6",
+      }),
+    })
+      .then(function (response) {
+        return response?.json();
+      })
+      .then(function (data) {
         setIsLoading(false);
         const response = JSON.stringify(data);
         sessionStorage.setItem("auth", response);
 
-        if (data?.data?.verificationResult === true) {
+        if (data.verificationResult === true) {
           navigate(PATHS.dashboard);
-        } else if (data?.data?.verificationResult === false) {
-          if (data?.data?.error?.errorMessage === "Verification Failed") {
+        } else if (data.verificationResult === false) {
+          if (data?.error?.errorMessage === "Verification Failed") {
             toast.error("Authentication failed, face mismatch");
           } else {
             toast.error("No proper face is captured");
@@ -128,79 +149,13 @@ const Face = () => {
           setCropped(false);
         }
       });
-    setIsLoading(true);
-    //   fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON?.stringify({
-    //       transactionId: "b3c350aa-2734-48d1-345-7777777",
-    //       transactionSource: "nxGen MBAP TestTool",
-    //       uid: "111122223333555555",
-    //       needTemplates: 0,
-    //       probeFace: {
-    //         pos: "F",
-    //         image: croppedImage.replace("data:image/jpeg;base64,", ""),
-    //         template: null,
-    //         quality: 0.0,
-    //       },
-    //       galleryFace: {
-    //         pos: "F",
-    //         image: response.userData[0]?.ocr_user_image,
-    //         template: null,
-    //         quality: 0.0,
-    //       },
-    //       probeFingerData: null,
-    //       galleryFingerData: null,
-    //       probeIrisData: null,
-    //       galleryIrisData: null,
-    //       faceThreshold: "6",
-    //       fingerThreshold: "6",
-    //       irisThreshold: "6",
-    //     }),
-    //   })
-    //     .then(function (response) {
-    //       return response?.json();
-    //     })
-    //     .then(function (data) {
-    //       setIsLoading(false);
-    //       const response = JSON.stringify(data);
-    //       sessionStorage.setItem("auth", response);
-
-    //       if (data.verificationResult === true) {
-    //         navigate(PATHS.dashboard);
-    //       } else if (data.verificationResult === false) {
-    //         if (data?.error?.errorMessage === "Verification Failed") {
-    //           toast.error("Authentication failed, face mismatch");
-    //         } else {
-    //           toast.error("No proper face is captured");
-    //         }
-    //         setCroppedImage("");
-    //         setImage("");
-    //         setCropped(false);
-    //       }
-    //     });
-    var xhr = new XMLHttpRequest();
-    xhr.open(
-      "POST",
-      "https://ci-digital-services.netlify.app?url=http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics",
-    );
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        console.log(xhr.responseText);
-      } else {
-        console.log("Request failed.  Returned status of " + xhr.status);
-      }
-    };
-
-    xhr.send(JSON.stringify(data));
   };
 
   useEffect(() => {
     if (response?.statusCode != 200 || !response?.statusCode) {
       navigate("/");
     }
-  }, [navigate, response?.statusCode]);
+  }, [response?.statusCode]);
   useEffect(() => {
     if (auth?.verificationResult === true) {
       navigate(PATHS?.dashboard);
