@@ -8,11 +8,6 @@ import Webcam from "react-webcam";
 import { Button } from "react-bootstrap";
 import { PATHS } from "../../utils/constants";
 import axios from "axios";
-const videoConstraints = {
-  width: 519,
-  height: 400,
-  facingMode: "user",
-};
 
 const Face = () => {
   const navigate = useNavigate();
