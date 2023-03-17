@@ -62,7 +62,7 @@ const Face = () => {
     const url = "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics";
     const allOriginsUrl = "https://api.allorigins.win/get?url=";
 
-    fetch(allOriginsUrl + url, {
+    fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON?.stringify({
