@@ -60,11 +60,14 @@ const Face = () => {
   const handleNext = () => {
     //  navigate(PATHS.dashboard)
     const url = "http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics";
-    const allOriginsUrl = "https://api.allorigins.win/get?url=";
+    const corsProxyUrl = "https://proxy.cors.sh/";
 
-    fetch(url, {
+    fetch(corsProxyUrl + url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
       body: JSON?.stringify({
         transactionId: "b3c350aa-2734-48d1-345-7777777",
         transactionSource: "nxGen MBAP TestTool",
@@ -91,12 +94,26 @@ const Face = () => {
         irisThreshold: "6",
       }),
     })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the API response here
+      .then(function (response) {
+        return response?.text();
       })
-      .catch(error => {
-        // Handle any errors here
+      .then(function (data) {
+        setIsLoading(false);
+        const response = JSON.parse(data);
+        // sessionStorage.setItem("auth", response);
+
+        if (response.verificationResult === true) {
+          navigate(PATHS.dashboard);
+        } else if (response.verificationResult === false) {
+          if (response?.error?.errorMessage === "Verification Failed") {
+            toast.error("Authentication failed, face mismatch");
+          } else {
+            toast.error("No proper face is captured");
+          }
+          setCroppedImage("");
+          setImage("");
+          setCropped(false);
+        }
       });
     setIsLoading(true);
     fetch("http://gn-testapi.tech5.tech:9090/MBAP/api/verifyBiometrics", {
