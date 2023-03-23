@@ -78,7 +78,7 @@ const Face = () => {
           },
           galleryFace: {
             pos: "F",
-            image: response.userData[0]?.ocr_user_image,
+            image: response?.userData[0]?.ocr_user_image,
             template: null,
             quality: 0.0,
           },
@@ -274,9 +274,7 @@ const Face = () => {
 
                           width: "13rem",
                         }}
-                        onClick={() => {
-                          handleNext();
-                        }}
+                        onClick={() => handleNext()}
                       >
                         Continue
                       </Button>

@@ -4,10 +4,14 @@ import { Box } from "@mui/material";
 
 // ! Re_usable Component
 
-const DrawList = ({ setIsOpen }) => {
+const DrawList = ({ setQrImg }) => {
+  const handleClickOpen = () => {
+    setQrImg(true);
+  };
   const face = "SAd";
   const profile_pic = "SAd";
   const response = JSON.parse(sessionStorage.getItem("response"));
+
   return (
     <Box width='280px'>
       <Typography
@@ -154,10 +158,12 @@ const DrawList = ({ setIsOpen }) => {
                     }`
                   : profile_pic
               }
+              onClick={handleClickOpen}
               style={{
                 width: "120px",
                 height: "120px",
                 objectFit: "cover",
+                cursor: "pointer",
               }}
             />
           </Box>

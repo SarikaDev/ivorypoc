@@ -14,7 +14,8 @@ import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import LinkIcon from "@mui/icons-material/Link";
 import { useNavigate } from "react-router-dom";
-const Dashboard = () => {
+import QRDailog from "../../components/Dailog/QRDailog";
+const Dashboard = ({ QrImg, setQrImg }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -60,6 +61,7 @@ const Dashboard = () => {
           </Typography>
         </Box>
       </Modal>
+      <QRDailog setQrImg={setQrImg} QrImg={QrImg} />
       <Typography
         variant='h6'
         sx={{ mb: 3 }}
