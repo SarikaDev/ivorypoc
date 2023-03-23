@@ -56,7 +56,7 @@ const Login = () => {
         toast.error("please enter ID number");
       } else {
         setIsLoading(true);
-        fetch("https://efreshsoftwares.in/ivrdigital/login.php", {
+        fetch("https://rancher.aptiway.com/login.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
