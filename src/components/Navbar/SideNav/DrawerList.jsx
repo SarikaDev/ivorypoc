@@ -153,7 +153,7 @@ const DrawList = ({ setQrImg }) => {
               src={
                 face?.length
                   ? `${
-                      "https://rancher.aptiway.com/api/" +
+                      "https://eservices.aptiway.com/api/" +
                       response?.userData[0]?.qr_image
                     }`
                   : profile_pic

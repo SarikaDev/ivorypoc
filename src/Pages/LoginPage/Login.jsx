@@ -56,7 +56,7 @@ const Login = () => {
         toast.error("please enter ID number");
       } else {
         setIsLoading(true);
-        fetch("https://rancher.aptiway.com/api/login.php", {
+        fetch("https://eservices.aptiway.com/api/login.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
