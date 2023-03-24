@@ -29,7 +29,7 @@ const QRDailog = ({ setQrImg, QrImg }) => {
             src={
               face?.length
                 ? `${
-                    "https://rancher.aptiway.com/" +
+                    "https://rancher.aptiway.com/api/" +
                     response?.userData[0]?.qr_image
                   }`
                 : profile_pic
